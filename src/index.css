@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root{
+
+    /* Colors */
+    
+    --light-cyan: 193 38% 86%;
+    --neon-green: 150 100% 66%;
+    --grayish-blue: 217 19% 38%;
+    --dark-grayish-blue: 217 19% 24%;
+    --dark-blue: 218 23% 16%;
+
+    /* Fonts */
+
+    --ff-manrope:'https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap';
+    --fw-700:700;
+    
+    /*semantics*/
+
+    --bg-all: var(--dark-blue);
+    --green: var(--neon-green);
+    --text-all: var(--grayish-blue);
+    --bg-card: var(--dark-grayish-blue);
+    --blue: var(--light-cyan);
+  }
+}
