@@ -15,8 +15,11 @@ export default {
         'background': '#B8DAEB',
         'dark-blue': '#001A33',
         'grey' : '#D7E1F4',
-        'yellow': '#F5CF6A',
-        'orange': '#ECB770',
+
+        'midi': '#F5CF6A',
+        'matin': '#ECB770',
+        'soir': '#EC9570',
+        'nuit': '#6FB6DA',
       },
     },
   },
