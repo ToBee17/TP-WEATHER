@@ -11,11 +11,12 @@ export default {
       },
       
       colors: {
-        'background': "hsl(var(--bg-all)/ <alpha-value>)",
-        'text': "hsl(var(--text-all)/ <alpha-value>)",
-        'text-light': "hsl(var(--green)/ <alpha-value>)",
-        'bg-card': "hsl(var(--bg-card)/ <alpha-value>)",
-        'blue-color': "hsl(var(--blue)/ <alpha-value>)",
+
+        'background': '#B8DAEB',
+        'dark-blue': '#001A33',
+        'grey' : '#D7E1F4',
+        'yellow': '#F5CF6A',
+        'orange': '#ECB770',
       },
     },
   },

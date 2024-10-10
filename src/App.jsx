@@ -1,18 +1,36 @@
+import { label } from "framer-motion/client";
 import { useEffect, useState } from "react";
-import Phone from "./components/icon/phone";
-import Mail from "./components/icon/Mail";
-import Date from "./components/icon/Date";
-import Position from "./components/icon/Position";
-import Lock from "./components/icon/Lock";
+
+const weatherDescriptions = [
+    { label: "Ciel clair", icon: '/src/components/icon/Sun.png', codes: [0] },
+    { label: "Nuageux", icon: '/src/components/icon/Nuage.png', codes: [1, 2, 3] },
+    { label: "Brouillard", icon: '/src/components/icon/Brouillard.png', codes: [45, 48, 51, 53, 55, 56, 57] },
+    { label: "Pluie", icon: '/src/components/icon/Pluie.png', codes: [61, 63, 65, 66, 67] },
+    { label: "Neige", icon: '/src/components/icon/Pluie.png', codes: [71, 73, 75, 77, 85, 86] },
+    { label: "Averse", icon: '/src/components/icon/Averse.png', codes: [80, 81, 82] },
+    { label: "Orage", icon: '/src/components/icon/Orage.png', codes: [95, 96, 99] },
+];
+
+
 
 
 export default function Card({ }) {
     const [data, setData] = useState({});
+    const [weatherDescription, setWeatherDescription] = useState("");
 
+    const getWeatherDescription = (code) => {
+        const weather = weatherDescriptions.find((weather) => weather.codes.includes(code));
+        return weather ? weather.label : "Météo inconnue";
+    }
 
-    const fetchNewUser = async () => {
+    const getWeatherIcon = (code) => {
+        const weather = weatherDescriptions.find((weather) => weather.codes.includes(code));
+        return weather ? weather.icon : "Sun";
+    }
+
+    const fetchNewWeather = async () => {
         try {
-            const response = await fetch("https://randomuser.me/api/?results=9");
+            const response = await fetch("/json/data.json");
             const data = await response.json();
             setData(data);
             console.log(data);
@@ -22,37 +40,34 @@ export default function Card({ }) {
     };
 
     useEffect(() => {
-        fetchNewUser();
+        fetchNewWeather();
     }, []);
 
-    if (!data?.results) {
-        return (<p>Loading...</p>);
-    }
+    const temperature = Math.round(data?.current.temperature_2m);
+    const temperatureMax = Math.round(data?.daily.temperature_2m_max[0]);
+    const temperatureMin = Math.round(data?.daily.temperature_2m_min[0]);
+
 
     return (
         <>
-            <div className="h-screen flex flex-wrap justify-center items-center bg-white gap-10 p-20">
-
-                {data?.results.map((user) => (
-                    <section className="flex flex-col bg-background text-white p-7 gap-5 rounded-2xl h-[20.5rem] aspect-square">
-
-
-                        <ul className="flex  items-center gap-4"><img className="w-fit max-w-[100px] rounded-full" src={user.picture.large} alt="Picture Profile" />
-                            <p className="text-xl font-bold w-full text-center max-w-[160px]">{user.name.first} {user.name.last}</p></ul>
-
-                        <div className="flex flex-col gap-2 max-w-[272px]">
-                            <ul className="flex gap-4"><Phone className="size-5 min-w-fit" /> <p className="truncate ">{user.phone}</p></ul>
-                            <ul className="flex gap-4"><Mail className="size-5 min-w-fit" /> <p className="truncate ">{user.email}</p></ul>
-                            <ul className="flex gap-4"><Date className="size-5 min-w-fit" /> <p className="truncate ">{user.dob.date}</p></ul>
-                            <ul className="flex gap-4 "><Position className="size-5 min-w-fit" />  <p className="truncate">{user.location.street.number} {user.location.street.name}, {user.location.country}</p></ul>
-                            <ul className="flex gap-4"><Lock className="size-5 min-w-fit" /> <p className="truncate ">{user.login.password}</p></ul>
+            <section className="h-screen flex flex-col items-center pt-10 gap-10 bg-background text-dark-blue">
+                <h1 className="text-3xl font-bold text-center">Limoges</h1>
+                <div className="flex flex-col gap-4">
+                    <p className="text-5xl font-bold text-center">{temperature} {data?.current_units.temperature_2m}</p>
+                    <div className="flex justify-center items-center gap-2"> 
+                        <img src={getWeatherIcon(data?.daily.weather_code[0])} alt="" className="fill-black" /> <p className="text-center font-bold">{getWeatherDescription(data?.daily.weather_code[0])}</p>
                         </div>
+                    <p className="font-bold">{temperatureMax}°C /{temperatureMin}°C Ressenti : {data?.current.apparent_temperature}°C</p>
+                    </div>
+                    
+                <div className="flex bg-dark-blue text-white font-bold p-8 rounded-xl   ">
+                    <h2 className="text-xl">Aujourd'hui</h2>
+                </div>
 
-                    </section>
-                ))}
-
-            </div>
-
+                <div className="w-80 h-80 rounded-full bg-orange absolute top-[50%] left-[0%]"> </div>
+            </section>
         </>
     );
 }
+
+
