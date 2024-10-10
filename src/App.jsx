@@ -1,4 +1,4 @@
-import { label } from "framer-motion/client";
+import { label, time } from "framer-motion/client";
 import { useEffect, useState } from "react";
 
 const weatherDescriptions = [
@@ -11,10 +11,18 @@ const weatherDescriptions = [
     { label: "Orage", icon: '/src/components/icon/Orage.png', codes: [95, 96, 99] },
 ];
 
+const TimePeriod = [
+    { label: 'matin', startTime: '06:00:00', endTime: '08:00:00', position: { top: '10%', left: '20%' } },
+    { label: 'matinée', startTime: '08:00:00', endTime: '12:00:00', position: { top: '20%', left: '40%' } },
+    { label: 'après-midi', startTime: '12:00:00', endTime: '18:00:00', position: { top: '30%', left: '60%' } },
+    { label: 'soirée', startTime: '18:00:00', endTime: '21:00:00', position: { top: '40%', left: '80%' } },
+    { label: 'nuit', startTime: '21:00:00', endTime: '06:00:00', position: { top: '50%', left: '90%' } },
+];
 
 
 
-export default function Card({ }) {
+
+export default function Weather({ }) {
     const [data, setData] = useState({});
     const [weatherDescription, setWeatherDescription] = useState("");
 
@@ -27,6 +35,23 @@ export default function Card({ }) {
         const weather = weatherDescriptions.find((weather) => weather.codes.includes(code));
         return weather ? weather.icon : "Sun";
     }
+
+    const getTimePeriod = (time) => {
+        const currentTime = new Date(time).toTimeString().split(' ')[0];
+        for (const period of TimePeriod) {
+            const { startTime, endTime } = period;
+            if (startTime < endTime) {
+                if (currentTime >= startTime && currentTime < endTime) {
+                    return period.label;
+                }
+            } else {
+                if (currentTime >= startTime || currentTime < endTime) {
+                    return period.label;
+                }
+            }
+        }
+        return "Période inconnue";
+    };
 
     const fetchNewWeather = async () => {
         try {
@@ -56,9 +81,11 @@ export default function Card({ }) {
                     <p className="text-5xl font-bold text-center">{temperature} {data?.current_units.temperature_2m}</p>
                     <div className="flex justify-center items-center gap-2"> 
                         <img src={getWeatherIcon(data?.daily.weather_code[0])} alt="" className="fill-black" /> <p className="text-center font-bold">{getWeatherDescription(data?.daily.weather_code[0])}</p>
-                        </div>
-                    <p className="font-bold">{temperatureMax}°C /{temperatureMin}°C Ressenti : {data?.current.apparent_temperature}°C</p>
                     </div>
+                    <p className="font-bold">{temperatureMax}°C /{temperatureMin}°C Ressenti : {data?.current.apparent_temperature}°C</p>
+                    <p className="font-bold">Heure : {new Date(data?.current.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                    <p>{getTimePeriod(data?.current.time)}</p>
+                </div>
                     
                 <div className="flex flex-col bg-dark-blue text-white font-bold p-8 rounded-xl gap-6">
                     <h2 className="text-xl">Aujourd'hui</h2>
