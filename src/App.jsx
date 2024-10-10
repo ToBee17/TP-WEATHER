@@ -60,11 +60,12 @@ export default function Card({ }) {
                     <p className="font-bold">{temperatureMax}°C /{temperatureMin}°C Ressenti : {data?.current.apparent_temperature}°C</p>
                     </div>
                     
-                <div className="flex bg-dark-blue text-white font-bold p-8 rounded-xl   ">
+                <div className="flex flex-col bg-dark-blue text-white font-bold p-8 rounded-xl gap-6">
                     <h2 className="text-xl">Aujourd'hui</h2>
+                    <ul>li</ul>
                 </div>
 
-                <div className="w-80 h-80 rounded-full bg-orange absolute top-[50%] left-[0%]"> </div>
+                <div className="w-80 h-80 rounded-full bg-orange absolute top-[80%] left-[10%]"> </div>
             </section>
         </>
     );
