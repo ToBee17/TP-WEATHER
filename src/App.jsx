@@ -94,7 +94,7 @@ export default function Weather({ }) {
 
     const fetchNewWeather = async () => {
         try {
-            const response = await fetch("https://api.open-meteo.com/v1/forecast?latitude=45.8336&longitude=1.2476&current=temperature_2m,apparent_temperature,weather_code&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,rain,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum&forecast_days=1");
+            const response = await fetch("https://api.open-meteo.com/v1/forecast?latitude=45.8336&longitude=1.2476&current=temperature_2m,apparent_temperature,weather_code&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,rain,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=Europe%2FLondon&forecast_days=1");
             const data = await response.json();
             setData(data);
             setLoading(false);
