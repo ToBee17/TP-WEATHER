@@ -18,7 +18,7 @@ const TimePeriod = [
     { label: '09:00', startTime: '09:00:00', endTime: '10:00:00', position: '30%', periode: 'bg-matin' },
     { label: '10:00', startTime: '10:00:00', endTime: '11:00:00', position: '50%', periode: 'bg-matin' },
     { label: '11:00', startTime: '11:00:00', endTime: '12:00:00', position: '70%', periode: 'bg-midi' },
-    { label: '12:00', startTime: '12:00:00', endTime: '13:00:00', position: '85%', periode: 'bg-midi' },
+    { label: '12:00', startTime: '12:00:00', endTime: '13:00:00', position: '80%', periode: 'bg-midi' },
     { label: '13:00', startTime: '13:00:00', endTime: '14:00:00', position: '70%', periode: 'bg-midi' },
     { label: '14:00', startTime: '14:00:00', endTime: '15:00:00', position: '50%', periode: 'bg-midi' },
     { label: '15:00', startTime: '15:00:00', endTime: '16:00:00', position: '30%', periode: 'bg-midi' },
@@ -30,7 +30,7 @@ const TimePeriod = [
     { label: '21:00', startTime: '21:00:00', endTime: '22:00:00', position: '30%', periode: 'bg-nuit' },
     { label: '22:00', startTime: '22:00:00', endTime: '23:00:00', position: '50%', periode: 'bg-nuit' },
     { label: '23:00', startTime: '23:00:00', endTime: '00:00:00', position: '70%', periode: 'bg-nuit' },
-    { label: '00:00', startTime: '00:00:00', endTime: '01:00:00', position: '85%', periode: 'bg-nuit' },
+    { label: '00:00', startTime: '00:00:00', endTime: '01:00:00', position: '80%', periode: 'bg-nuit' },
     { label: '01:00', startTime: '01:00:00', endTime: '02:00:00', position: '70%', periode: 'bg-nuit' },
     { label: '02:00', startTime: '02:00:00', endTime: '03:00:00', position: '50%', periode: 'bg-nuit' },
     { label: '03:00', startTime: '03:00:00', endTime: '04:00:00', position: '30%', periode: 'bg-nuit' },
@@ -126,11 +126,11 @@ export default function Weather({ }) {
             <section className="h-screen flex flex-col items-center pt-10 gap-10 bg-background text-dark-blue">
                 <h1 className="text-3xl font-bold text-center z-10">Limoges</h1>
                 <div className="flex flex-col gap-4 z-10">
-                    <p className="text-6xl font-bold text-center">{temperature} {data?.current_units.temperature_2m}</p>
+                    <p className="text-6xl font-bold text-center">{temperature}{data?.current_units.temperature_2m}</p>
                     <div className="flex justify-center items-center gap-2"> 
-                        <img src={getWeatherIcon(data?.daily.weather_code[0])} alt="" className="fill-black" /> <p className="text-center font-bold">{getWeatherDescription(data?.daily.weather_code[0])}</p>
+                        <img src={getWeatherIcon(data?.daily.weather_code[0])} alt="icon_météo"/> <p className="text-center font-bold text-lg">{getWeatherDescription(data?.daily.weather_code[0])}</p>
                     </div>
-                    <p className="font-bold">{temperatureMax}°C /{temperatureMin}°C Ressenti : {data?.current.apparent_temperature}°C</p>
+                    <p className="font-bold text-lg">{temperatureMax}°C /{temperatureMin}°C Ressenti : {data?.current.apparent_temperature}°C</p>
                 </div>
                     
                 <div className="flex flex-col bg-dark-blue text-white font-bold p-8 rounded-xl gap-6 z-10">
@@ -145,12 +145,13 @@ export default function Weather({ }) {
                                 <img src="/src/components/icon/humidite.png" alt="icon_eau" />
                                 <p>{Math.round(data?.hourly.wind_speed_10m[index])}Km/h</p>
                                 <img src="/src/components/icon/vent.png" alt="icon_wind"/>
-                            </li>))}
+                            </li>
+                        ))}
                     </ul>
                 </div>
             </section>
 
-            <div className={`w-80 h-80 rounded-full absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center ${getPeriod(data?.current.time)}`} style={{ bottom: getTimePeriodPosition(data?.current.time),}}></div>
+            <div className={`w-96 h-96 rounded-full absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center ${getPeriod(data?.current.time)}`} style={{ bottom: getTimePeriodPosition(data?.current.time),}}></div>
         </>
     );
 }
